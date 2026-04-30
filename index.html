@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday Habiba 🎂</title>
+  <meta name="description" content="A special interactive birthday surprise for Habiba 💕" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&family=Dancing+Script:wght@600;700&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- Floating hearts background -->
+  <div id="floating-hearts" aria-hidden="true"></div>
+
+  <!-- Music player -->
+  <div id="music-player">
+    <button id="music-toggle" title="Toggle music">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M9 18V5l12-2v13" />
+        <circle cx="6" cy="18" r="3" />
+        <circle cx="18" cy="16" r="3" />
+      </svg>
+    </button>
+    <audio id="bg-music" loop src="assets/music/background.mp3"></audio>
+  </div>
+
+  <!-- ===================== APP ===================== -->
+  <div id="app">
+
+    <!-- ===== SCENE 1 — PASSWORD ===== -->
+    <section id="scene-password" class="scene active" aria-label="Password Gate">
+      <div class="stars-bg" aria-hidden="true"></div>
+      <div class="pw-card">
+        <div class="lock-emoji">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--c-primary)" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+          </svg>
+        </div>
+        <h1 class="pw-title">Wait a second…</h1>
+        <p class="pw-subtitle">Before this magic begins,<br />prove it's really you 💕</p>
+        <div class="pw-input-row">
+          <input id="password-input" type="password" placeholder="Enter the secret code" maxlength="10"
+            autocomplete="off" aria-label="Secret password" />
+          <button id="password-submit" aria-label="Submit password">→</button>
+        </div>
+        <p id="error-msg" class="pw-error hidden"></p>
+        <p id="hint-msg" class="pw-hint hidden">Really, you forgot the day that I told you I love you? 💕</p>
+        <p class="pw-attempts-left" id="attempts-label"></p>
+      </div>
+      <!-- Success burst overlay -->
+      <div id="pw-success-overlay" class="pw-success-overlay hidden" aria-hidden="true">
+        <div class="burst-heart">
+          <svg width="80" height="80" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="2">
+            <path
+              d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+          </svg>
+        </div>
+        <h2>There she is! 🎉</h2>
+      </div>
+    </section>
+
+    <!-- ===== SCENE 2 — CANDLE ===== -->
+    <section id="scene-candle" class="scene" aria-label="Birthday Candle">
+      <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+      <div class="candle-scene-inner">
+        <div class="birthday-heading">
+          <span class="bday-happy">Happy</span>
+          <span class="bday-birthday">Birthday</span>
+          <span class="bday-name">Habiba</span>
+        </div>
+
+        <!-- Cake -->
+        <div class="cake-wrapper" aria-label="Birthday cake">
+          <div class="candles-row">
+            <div class="candle" id="c1">
+              <div class="candle-body c-pink"></div>
+              <div class="flame-wrap">
+                <div class="flame" id="flame1">
+                  <div class="flame-core"></div>
+                </div>
+                <div class="glow"></div>
+              </div>
+              <div class="smoke" id="smoke1" aria-hidden="true"></div>
+            </div>
+            <div class="candle" id="c2">
+              <div class="candle-body c-gold"></div>
+              <div class="flame-wrap">
+                <div class="flame" id="flame2">
+                  <div class="flame-core"></div>
+                </div>
+                <div class="glow"></div>
+              </div>
+              <div class="smoke" id="smoke2" aria-hidden="true"></div>
+            </div>
+          </div>
+          <div class="cake-tier tier-top">
+            <span class="cake-num">22</span>
+          </div>
+          <div class="cake-tier tier-mid">
+            <span class="cake-deco">❤️ &nbsp; ❤️</span>
+          </div>
+          <div class="cake-tier tier-base">
+            <span class="cake-deco">🌸 &nbsp; 🌸 &nbsp; 🌸</span>
+          </div>
+          <div class="cake-plate"></div>
+        </div>
+
+        <!-- Instructions -->
+        <div id="blow-area">
+          <p class="blow-label">🎤 Blow out the candles and make a wish!</p>
+          <div class="blow-btns">
+            <button id="btn-mic" class="btn-primary">🎙️ Use Microphone</button>
+            <button id="btn-tap" class="btn-secondary">🌬️ Tap to Blow</button>
+          </div>
+        </div>
+
+        <div id="wish-text" class="wish-text hidden">
+          <p>✨ Your wish is flying up to the stars… ✨</p>
+          <button id="btn-story" class="btn-next">Our Story →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SCENE 3 — OUR STORY ===== -->
+    <section id="scene-story" class="scene" aria-label="Our Story Timeline">
+      <div class="story-hero">
+        <h1 class="story-main-title">Our Story</h1>
+        <p class="story-subtitle">Every chapter written with love 💕</p>
+      </div>
+
+      <div class="timeline" id="timeline">
+
+        <!-- Chapter 1 -->
+        <article class="chapter" id="ch1">
+          <div class="chapter-header">
+            <span class="ch-num">01</span>
+            <span class="ch-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--c-primary)"
+                stroke-width="2">
+                <polygon
+                  points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+              </svg></span>
+            <h2 class="ch-title">The Beginning</h2>
+            <!-- EDIT: Replace with your own description -->
+            <p class="ch-desc">Where it all started… the moment everything changed.</p>
+          </div>
+          <div class="romantic-text-box" contenteditable="true">
+            Type your romantic words here... 💕
+          </div>
+          <div class="photo-grid cols-2">
+            <figure class="polaroid" style="--r:-3deg"><img src="photos/1.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption><!-- caption --></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:2deg"><img src="photos/2.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption><!-- caption --></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:-1deg"><img src="photos/3.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption><!-- caption --></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:4deg"><img src="photos/4.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption><!-- caption --></figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <!-- Chapter 2 -->
+        <article class="chapter" id="ch2">
+          <div class="chapter-header">
+            <span class="ch-num">02</span>
+            <span class="ch-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--c-primary)"
+                stroke-width="2">
+                <path d="M12 22c4.97 0 9-4.03 9-9-4.97 0-9 4.03-9 9z" />
+                <path d="M12 22c-4.97 0-9-4.03-9-9 4.97 0 9-4.03 9 9z" />
+                <path d="M12 2c4.97 0 9 4.03 9 9-4.97 0-9-4.03-9-9z" />
+                <path d="M12 2c-4.97 0-9 4.03-9 9 4.97 0 9-4.03 9-9z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg></span>
+            <h2 class="ch-title">First Moments</h2>
+            <p class="ch-desc">The little moments that became our favourite memories.</p>
+          </div>
+          <div class="romantic-text-box" contenteditable="true">
+            Type your romantic words here... 💕
+          </div>
+          <div class="photo-grid cols-3">
+            <figure class="polaroid" style="--r:2deg"><img src="photos/5.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:-2deg"><img src="photos/6.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:3deg"><img src="photos/7.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:-1deg"><img src="photos/8.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:1deg"><img src="photos/9.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:-3deg"><img src="photos/10.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <!-- Chapter 3 -->
+        <article class="chapter" id="ch3">
+          <div class="chapter-header">
+            <span class="ch-num">03</span>
+            <span class="ch-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--c-primary)"
+                stroke-width="2">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+                <path d="M2 12h20" />
+              </svg></span>
+            <h2 class="ch-title">Adventures Together</h2>
+            <p class="ch-desc">Every place is better when we're together.</p>
+          </div>
+          <div class="romantic-text-box" contenteditable="true">
+            Type your romantic words here... 💕
+          </div>
+          <div class="photo-grid cols-2">
+            <figure class="polaroid" style="--r:-2deg"><img src="photos/11.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:3deg"><img src="photos/12.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:-1deg"><img src="photos/13.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:2deg"><img src="photos/14.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:-3deg"><img src="photos/15.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:1deg"><img src="photos/16.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <!-- Chapter 4 -->
+        <article class="chapter" id="ch4">
+          <div class="chapter-header">
+            <span class="ch-num">04</span>
+            <span class="ch-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--c-primary)"
+                stroke-width="2">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+                <line x1="9" y1="9" x2="9.01" y2="9" />
+                <line x1="15" y1="9" x2="15.01" y2="9" />
+              </svg></span>
+            <h2 class="ch-title">The Fun Times</h2>
+            <p class="ch-desc">Your laugh is my favourite sound in the whole world.</p>
+          </div>
+          <div class="romantic-text-box" contenteditable="true">
+            Type your romantic words here... 💕
+          </div>
+          <div class="photo-grid cols-3">
+            <figure class="polaroid" style="--r:2deg"><img src="photos/17.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:-2deg"><img src="photos/18.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:3deg"><img src="photos/19.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:-1deg"><img src="photos/20.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:1deg"><img src="photos/21.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:-3deg"><img src="photos/22.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <!-- Chapter 5 -->
+        <article class="chapter" id="ch5">
+          <div class="chapter-header">
+            <span class="ch-num">05</span>
+            <span class="ch-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="var(--c-primary)"
+                stroke="var(--c-primary)" stroke-width="2">
+                <path
+                  d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+              </svg></span>
+            <h2 class="ch-title">Every Day With You</h2>
+            <p class="ch-desc">Even the ordinary days feel extraordinary with you.</p>
+          </div>
+          <div class="romantic-text-box" contenteditable="true">
+            Type your romantic words here... 💕
+          </div>
+          <div class="photo-grid cols-2">
+            <figure class="polaroid" style="--r:-2deg"><img src="photos/23.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:3deg"><img src="photos/24.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:-1deg"><img src="photos/25.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:2deg"><img src="photos/26.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <!-- Chapter 6 -->
+        <article class="chapter" id="ch6">
+          <div class="chapter-header">
+            <span class="ch-num">06</span>
+            <span class="ch-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--c-primary)"
+                stroke-width="2">
+                <path d="M8 22h8" />
+                <path d="M12 10v12" />
+                <path d="M12 10a4 4 0 0 0 4-4V2H8v4a4 4 0 0 0 4 4z" />
+              </svg></span>
+            <h2 class="ch-title">Celebrations</h2>
+            <p class="ch-desc">Every milestone, every victory — always together.</p>
+          </div>
+          <div class="romantic-text-box" contenteditable="true">
+            Type your romantic words here... 💕
+          </div>
+          <div class="photo-grid cols-3">
+            <figure class="polaroid" style="--r:1deg"><img src="photos/27.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:-2deg"><img src="photos/28.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:3deg"><img src="photos/29.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:-1deg"><img src="photos/30.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:2deg"><img src="photos/31.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:-3deg"><img src="photos/32.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <!-- Chapter 7 -->
+        <article class="chapter" id="ch7">
+          <div class="chapter-header">
+            <span class="ch-num">07</span>
+            <span class="ch-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="var(--c-primary)"
+                stroke="var(--c-primary)" stroke-width="2">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+              </svg></span>
+            <h2 class="ch-title">Late Night Conversations</h2>
+            <p class="ch-desc">When the world sleeps, we talk until sunrise.</p>
+          </div>
+          <div class="romantic-text-box" contenteditable="true">
+            Type your romantic words here... 💕
+          </div>
+          <div class="photo-grid cols-2">
+            <figure class="polaroid" style="--r:-2deg"><img src="photos/33.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:3deg"><img src="photos/34.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:-1deg"><img src="photos/35.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:2deg"><img src="photos/36.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <!-- Chapter 8 -->
+        <article class="chapter" id="ch8">
+          <div class="chapter-header">
+            <span class="ch-num">08</span>
+            <span class="ch-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--c-primary)"
+                stroke-width="2">
+                <path
+                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+              </svg></span>
+            <h2 class="ch-title">Today & Always</h2>
+            <p class="ch-desc">And the story keeps going… one beautiful day at a time.</p>
+          </div>
+          <div class="romantic-text-box" contenteditable="true">
+            Type your romantic words here... 💕
+          </div>
+          <div class="photo-grid cols-3">
+            <figure class="polaroid" style="--r:1deg"><img src="photos/37.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:-2deg"><img src="photos/38.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:3deg"><img src="photos/39.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:-1deg"><img src="photos/40.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:2deg"><img src="photos/41.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:-3deg"><img src="photos/42.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <!-- Bonus Chapter -->
+        <article class="chapter" id="ch9">
+          <div class="chapter-header">
+            <span class="ch-num">✨</span>
+            <span class="ch-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--c-primary)"
+                stroke-width="2">
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                <circle cx="12" cy="13" r="4" />
+              </svg></span>
+            <h2 class="ch-title">A Little More of Us</h2>
+            <p class="ch-desc">Because one chapter is never enough.</p>
+          </div>
+          <div class="romantic-text-box" contenteditable="true">
+            Type your romantic words here... 💕
+          </div>
+          <div class="photo-grid cols-3">
+            <figure class="polaroid" style="--r:-2deg"><img src="photos/43.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:3deg"><img src="photos/44.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:-1deg"><img src="photos/45.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:2deg"><img src="photos/46.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:-3deg"><img src="photos/47.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:1deg"><img src="photos/48.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:-2deg"><img src="photos/49.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:3deg"><img src="photos/50.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:-1deg"><img src="photos/51.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:2deg"><img src="photos/52.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:-3deg"><img src="photos/53.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:1deg"><img src="photos/54.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:-2deg"><img src="photos/55.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:3deg"><img src="photos/56.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:-1deg"><img src="photos/57.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:2deg"><img src="photos/58.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+            <figure class="polaroid" style="--r:-3deg"><img src="photos/59.jpg" alt="Memory" loading="lazy"
+                onerror="this.closest('.polaroid').classList.add('ph')">
+              <figcaption></figcaption>
+            </figure>
+          </div>
+        </article>
+
+      </div><!-- /timeline -->
+
+      <div class="story-next-wrap">
+        <button id="btn-cards" class="btn-next">22 Reasons I Love You →</button>
+      </div>
+    </section>
+
+    <!-- ===== SCENE 4 — 22 REASONS ===== -->
+    <section id="scene-cards" class="scene" aria-label="22 Reasons I Love You">
+      <div class="cards-hero">
+        <h1 class="cards-title">22 Reasons I Love You</h1>
+        <p class="cards-subtitle">Tap each card to reveal 💕</p>
+        <div class="cards-progress-bar">
+          <div id="cards-progress" class="cards-progress-fill"></div>
+        </div>
+        <p id="cards-count" class="cards-count">0 / 22 revealed</p>
+      </div>
+      <div class="cards-grid" id="cards-grid">
+        <!-- Cards injected by JS from REASONS array in main.js -->
+      </div>
+      <div id="cards-complete" class="cards-complete hidden">
+        <p>You found all 22 reasons! 🎉</p>
+        <button id="btn-finale" class="btn-next">The Grand Finale →</button>
+      </div>
+    </section>
+
+    <!-- ===== SCENE 5 — FINALE ===== -->
+    <section id="scene-finale" class="scene" aria-label="Grand Finale">
+      <canvas id="fireworks-canvas" aria-hidden="true"></canvas>
+      <div class="finale-inner">
+        <h1 class="finale-title">Happy 22nd Birthday</h1>
+        <h2 class="finale-name">Habiba 🎂</h2>
+
+        <div class="love-letter">
+          <p id="letter-text" class="letter-text"></p>
+        </div>
+
+        <div class="days-counter">
+          <span class="days-label">Together for</span>
+          <span class="days-num" id="days-num">—</span>
+          <span class="days-label">days so far 💕</span>
+          <!-- EDIT: Set your anniversary date in main.js → ANNIVERSARY_DATE -->
+        </div>
+
+        <button id="btn-wish" class="btn-wish">🌠 Make a Wish</button>
+        <p class="finale-footer">Made with love, just for you 💌</p>
+      </div>
+    </section>
+
+  </div><!-- /app -->
+
+  <script src="main.js"></script>
+</body>
+
+</html>
