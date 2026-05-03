@@ -108,8 +108,8 @@ document.addEventListener('DOMContentLoaded', () => {
       attempts++;
       errorAttempts++;
       pwInput.value = '';
-      errorMsg.textContent = funnyErrors[(errorAttempts - 1) % funnyErrors.length];
-      errorMsg.classList.remove('hidden');
+      //errorMsg.textContent = funnyErrors[(errorAttempts - 1) % funnyErrors.length];
+      //errorMsg.classList.remove('hidden');
       gsap.fromTo('.pw-card', { x: -10 }, { x: 10, yoyo: true, repeat: 3, duration: 0.1 });
 
       if (attempts >= 3) {
