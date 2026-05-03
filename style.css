@@ -171,6 +171,7 @@ button {
 }
 
 .pw-error { color: #ff4d4d; font-size: 0.9rem; margin-top: 10px; }
+.pw-trial-msg { color: var(--c-primary); font-size: 1.1rem; margin-top: 10px; font-weight: bold; }
 .pw-hint { color: var(--c-accent); font-size: 1rem; margin-top: 15px; font-style: italic; }
 .pw-attempts-left { font-size: 0.8rem; opacity: 0.6; margin-top: 5px; }
 
@@ -589,4 +590,39 @@ button {
 @keyframes floatUp {
   0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
   100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+}
+
+.wish-input {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid var(--c-primary);
+  color: white;
+  padding: 15px 20px;
+  border-radius: 30px;
+  font-family: var(--f-body);
+  font-size: 1.2rem;
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 15px;
+  text-align: center;
+  transition: var(--trans-smooth);
+}
+
+.wish-input:focus {
+  outline: none;
+  box-shadow: 0 0 15px var(--c-primary-glow);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.flying-wish {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--f-script);
+  font-size: 3rem;
+  color: var(--c-accent);
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+  pointer-events: none;
+  z-index: 1000;
+  white-space: nowrap;
 }

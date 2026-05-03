@@ -15,6 +15,46 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
   const LOVE_LETTER = "My dearest Habiba,<br><br>Happy 22nd Birthday! Every day with you is a gift, and I wanted to make this one extra special. You mean the world to me, and I can't wait to make more beautiful memories together.<br><br>I love you endlessly.";
 
+  const ALL_PHOTOS = [
+    "1.jpg", "10.jpg", "11.jpg", "12.jpg", "13.jpg", "14.jpg", "15.jpg", "16.jpg", "17.jpg", "18.jpg", "19.jpg",
+    "2.jpg", "20.jpg", "21.jpg", "22.jpg", "23.jpg", "24.jpg", "25.jpg", "26.jpg", "27.jpg", "28.jpg", "29.jpg",
+    "3.jpg", "30.jpg", "31.jpg", "32.jpg", "33.jpg", "34.jpg", "35.jpg", "36.jpg", "37.jpg", "38.jpg", "39.jpg",
+    "4.jpg", "40.jpg", "41.jpg", "42.jpg", "43.jpg", "44.jpg", "45.jpg", "46.jpg", "47.jpg", "48.jpg", "49.jpg",
+    "6.jpg", "8.jpg", "9.jpg", "50.jpg", "51.jpg", "52.jpg", "53.jpg", "54.jpg", "55.jpg", "56.jpg", "57.jpg", "58.jpg", "59.jpg",
+    "WhatsApp Image 2026-05-03 at 1.38.28 AM (1).jpeg",
+    "WhatsApp Image 2026-05-03 at 1.38.28 AM.jpeg",
+    "WhatsApp Image 2026-05-03 at 1.38.29 AM (1).jpeg",
+    "WhatsApp Image 2026-05-03 at 1.38.29 AM.jpeg",
+    "WhatsApp Image 2026-05-03 at 1.38.30 AM (1).jpeg",
+    "WhatsApp Image 2026-05-03 at 1.38.30 AM.jpeg"
+  ];
+
+  function shufflePhotos() {
+    const shuffled = [...ALL_PHOTOS];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+
+    const imgs = document.querySelectorAll('.polaroid img');
+    let photoIndex = 0;
+    imgs.forEach((img, idx) => {
+      if (idx === 0) {
+        img.src = 'photos/7.jpg';
+      } else if (idx === 1) {
+        img.src = 'photos/5.jpg';
+      } else {
+        if (photoIndex < shuffled.length) {
+          img.src = 'photos/' + shuffled[photoIndex];
+          photoIndex++;
+        }
+      }
+    });
+  }
+
+  // Shuffle photos on load
+  shufflePhotos();
+
 
   // --- STATE ---
   let currentSceneIndex = 0;
@@ -38,12 +78,14 @@ document.addEventListener('DOMContentLoaded', () => {
         opacity: 0, duration: 0.5, onComplete: () => {
           currentScene.classList.remove('active');
           nextScene.classList.add('active');
+          window.scrollTo(0, 0);
           gsap.to(nextScene, { opacity: 1, duration: 0.5 });
           initSceneLogic(nextSceneId);
         }
       });
     } else {
       nextScene.classList.add('active');
+      window.scrollTo(0, 0);
       gsap.to(nextScene, { opacity: 1, duration: 0.5 });
       initSceneLogic(nextSceneId);
     }
@@ -86,6 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const pwInput = document.getElementById('password-input');
   const pwSubmit = document.getElementById('password-submit');
   const errorMsg = document.getElementById('error-msg');
+  const trialMsg = document.getElementById('trial-msg');
   const hintMsg = document.getElementById('hint-msg');
   const attemptsLabel = document.getElementById('attempts-label');
   let attempts = 0;
@@ -94,25 +137,32 @@ document.addEventListener('DOMContentLoaded', () => {
     "You are not actually Habiba, right? 🤨",
     "Try harder to remember! 🙄",
   ];
-  let errorAttempts = 0;
 
   function checkPassword() {
     const val = pwInput.value.trim();
     if (val === PASSWORD) {
       errorMsg.classList.add('hidden');
+      trialMsg.classList.add('hidden');
       tryPlayMusic();
       const overlay = document.getElementById('pw-success-overlay');
       overlay.classList.add('show');
       setTimeout(() => switchScene('scene-candle'), 2500);
     } else {
       attempts++;
-      errorAttempts++;
       pwInput.value = '';
-      //errorMsg.textContent = funnyErrors[(errorAttempts - 1) % funnyErrors.length];
-      //errorMsg.classList.remove('hidden');
+      
+      if (attempts === 1) {
+        trialMsg.textContent = funnyErrors[0];
+        trialMsg.classList.remove('hidden');
+      } else if (attempts === 2) {
+        trialMsg.textContent = funnyErrors[1];
+        trialMsg.classList.remove('hidden');
+      }
+
       gsap.fromTo('.pw-card', { x: -10 }, { x: 10, yoyo: true, repeat: 3, duration: 0.1 });
 
       if (attempts >= 3) {
+        trialMsg.classList.add('hidden');
         hintMsg.classList.remove('hidden');
       }
     }
@@ -169,8 +219,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     } catch (err) {
       console.error("Mic error:", err);
-      alert("Microphone access denied. You can tap to blow instead.");
+      alert("Microphone access denied or not available. You can tap to blow instead.");
       btnMic.style.display = 'none';
+      btnTap.classList.remove('hidden');
     }
   }
 
@@ -242,8 +293,38 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  document.getElementById('btn-finale').addEventListener('click', () => switchScene('scene-finale'));
+  document.getElementById('btn-to-video').addEventListener('click', () => switchScene('scene-video'));
 
+  document.getElementById('btn-video-next').addEventListener('click', () => {
+    document.getElementById('special-video').pause();
+    switchScene('scene-finale');
+  });
+
+  const specialVideo = document.getElementById('special-video');
+  if (specialVideo) {
+    specialVideo.addEventListener('play', () => {
+      if (isMusicPlaying) bgMusic.pause();
+    });
+    specialVideo.addEventListener('pause', () => {
+      if (isMusicPlaying) bgMusic.play();
+    });
+    specialVideo.addEventListener('ended', () => {
+      if (isMusicPlaying) bgMusic.play();
+    });
+  }
+
+  document.getElementById('btn-flip-all').addEventListener('click', () => {
+    const allCards = document.querySelectorAll('.reason-card');
+    let delay = 0;
+    allCards.forEach(card => {
+      if (!card.classList.contains('flipped')) {
+        setTimeout(() => {
+          card.click();
+        }, delay);
+        delay += 100;
+      }
+    });
+  });
 
   // --- SCENE 5: FINALE ---
   function initFinale() {
@@ -256,11 +337,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     document.getElementById('days-num').textContent = diffDays;
 
-    startFireworks();
+    // Fireworks start after making wish
   }
 
   document.getElementById('btn-wish').addEventListener('click', () => {
-    for (let i = 0; i < 5; i++) setTimeout(createFirework, i * 200);
+    const wishInput = document.getElementById('wish-input');
+    const wishVal = wishInput.value.trim();
+    if (!wishVal) {
+        wishInput.focus();
+        return;
+    }
+
+    const flyingText = document.createElement('div');
+    flyingText.className = 'flying-wish';
+    flyingText.textContent = wishVal;
+    document.getElementById('scene-finale').appendChild(flyingText);
+
+    document.getElementById('wish-container').style.display = 'none';
+
+    gsap.to(flyingText, {
+      y: -window.innerHeight,
+      scale: 1.5,
+      opacity: 0,
+      duration: 3,
+      ease: "power2.in",
+      onComplete: () => {
+        flyingText.remove();
+        startFireworks();
+        for (let i = 0; i < 15; i++) setTimeout(createFirework, i * 200);
+      }
+    });
   });
 
 

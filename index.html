@@ -41,20 +41,17 @@
       <div class="stars-bg" aria-hidden="true"></div>
       <div class="pw-card">
         <div class="lock-emoji">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--c-primary)" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
-            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-          </svg>
+          <span style="font-size: 3.5rem;">🎁</span>
         </div>
-        <h1 class="pw-title">Wait a second…</h1>
-        <p class="pw-subtitle">Before this magic begins,<br />prove it's really you 💕</p>
+        <h1 class="pw-title">A Special Delivery...</h1>
+        <p class="pw-subtitle">Before we unwrap this birthday surprise,<br />prove it's really the birthday girl! 🎂</p>
         <div class="pw-input-row">
           <input id="password-input" type="password" placeholder="Enter the secret code" maxlength="10"
             autocomplete="off" aria-label="Secret password" />
           <button id="password-submit" aria-label="Submit password">→</button>
         </div>
         <p id="error-msg" class="pw-error hidden"></p>
+        <p id="trial-msg" class="pw-trial-msg hidden"></p>
         <p id="hint-msg" class="pw-hint hidden">Really, you forgot the day that I told you I love you? 💕</p>
         <p class="pw-attempts-left" id="attempts-label"></p>
       </div>
@@ -121,7 +118,7 @@
           <p class="blow-label">🎤 Blow out the candles and make a wish!</p>
           <div class="blow-btns">
             <button id="btn-mic" class="btn-primary">🎙️ Use Microphone</button>
-            <button id="btn-tap" class="btn-secondary">🌬️ Tap to Blow</button>
+            <button id="btn-tap" class="btn-secondary hidden">🌬️ Tap to Blow</button>
           </div>
         </div>
 
@@ -154,8 +151,8 @@
             <!-- EDIT: Replace with your own description -->
             <p class="ch-desc">Where it all started… the moment everything changed.</p>
           </div>
-          <div class="romantic-text-box" contenteditable="true">
-            Type your romantic words here... 💕
+          <div class="romantic-text-box">
+            The one who means the world to me
           </div>
           <div class="photo-grid cols-2">
             <figure class="polaroid" style="--r:-3deg"><img src="photos/1.jpg" alt="Memory" loading="lazy"
@@ -192,8 +189,8 @@
             <h2 class="ch-title">First Moments</h2>
             <p class="ch-desc">The little moments that became our favourite memories.</p>
           </div>
-          <div class="romantic-text-box" contenteditable="true">
-            Type your romantic words here... 💕
+          <div class="romantic-text-box">
+            “It was never the big things, but the little moments with you that quietly turned into our most cherished memories.”
           </div>
           <div class="photo-grid cols-3">
             <figure class="polaroid" style="--r:2deg"><img src="photos/5.jpg" alt="Memory" loading="lazy"
@@ -236,8 +233,8 @@
             <h2 class="ch-title">Adventures Together</h2>
             <p class="ch-desc">Every place is better when we're together.</p>
           </div>
-          <div class="romantic-text-box" contenteditable="true">
-            Type your romantic words here... 💕
+          <div class="romantic-text-box">
+            “No matter where we go, every place becomes better simply because I’m with you.”
           </div>
           <div class="photo-grid cols-2">
             <figure class="polaroid" style="--r:-2deg"><img src="photos/11.jpg" alt="Memory" loading="lazy"
@@ -281,8 +278,8 @@
             <h2 class="ch-title">The Fun Times</h2>
             <p class="ch-desc">Your laugh is my favourite sound in the whole world.</p>
           </div>
-          <div class="romantic-text-box" contenteditable="true">
-            Type your romantic words here... 💕
+          <div class="romantic-text-box">
+            “Out of all the sounds I know, yours is the one that stays with me the most—your laugh is everything to me.”
           </div>
           <div class="photo-grid cols-3">
             <figure class="polaroid" style="--r:2deg"><img src="photos/17.jpg" alt="Memory" loading="lazy"
@@ -324,8 +321,8 @@
             <h2 class="ch-title">Every Day With You</h2>
             <p class="ch-desc">Even the ordinary days feel extraordinary with you.</p>
           </div>
-          <div class="romantic-text-box" contenteditable="true">
-            Type your romantic words here... 💕
+          <div class="romantic-text-box">
+            “Life feels so much brighter, even on the most ordinary days, when I have you with me.”
           </div>
           <div class="photo-grid cols-2">
             <figure class="polaroid" style="--r:-2deg"><img src="photos/23.jpg" alt="Memory" loading="lazy"
@@ -360,8 +357,8 @@
             <h2 class="ch-title">Celebrations</h2>
             <p class="ch-desc">Every milestone, every victory — always together.</p>
           </div>
-          <div class="romantic-text-box" contenteditable="true">
-            Type your romantic words here... 💕
+          <div class="romantic-text-box">
+            “From the smallest wins to the biggest milestones, I want us to face and celebrate everything together.”
           </div>
           <div class="photo-grid cols-3">
             <figure class="polaroid" style="--r:1deg"><img src="photos/27.jpg" alt="Memory" loading="lazy"
@@ -402,8 +399,8 @@
             <h2 class="ch-title">Late Night Conversations</h2>
             <p class="ch-desc">When the world sleeps, we talk until sunrise.</p>
           </div>
-          <div class="romantic-text-box" contenteditable="true">
-            Type your romantic words here... 💕
+          <div class="romantic-text-box">
+            “When everything else sleeps, we stay awake talking about anything and everything, like time doesn’t exist until the sun rises.”
           </div>
           <div class="photo-grid cols-2">
             <figure class="polaroid" style="--r:-2deg"><img src="photos/33.jpg" alt="Memory" loading="lazy"
@@ -437,8 +434,8 @@
             <h2 class="ch-title">Today & Always</h2>
             <p class="ch-desc">And the story keeps going… one beautiful day at a time.</p>
           </div>
-          <div class="romantic-text-box" contenteditable="true">
-            Type your romantic words here... 💕
+          <div class="romantic-text-box">
+            “Our story doesn’t rush—it simply continues, today and always, one beautiful day at a time.”
           </div>
           <div class="photo-grid cols-3">
             <figure class="polaroid" style="--r:1deg"><img src="photos/37.jpg" alt="Memory" loading="lazy"
@@ -480,8 +477,8 @@
             <h2 class="ch-title">A Little More of Us</h2>
             <p class="ch-desc">Because one chapter is never enough.</p>
           </div>
-          <div class="romantic-text-box" contenteditable="true">
-            Type your romantic words here... 💕
+          <div class="romantic-text-box">
+            “A little more of us, because our story deserves more than just one ending—it deserves forever chapters.”
           </div>
           <div class="photo-grid cols-3">
             <figure class="polaroid" style="--r:-2deg"><img src="photos/43.jpg" alt="Memory" loading="lazy"
@@ -570,14 +567,31 @@
         <div class="cards-progress-bar">
           <div id="cards-progress" class="cards-progress-fill"></div>
         </div>
-        <p id="cards-count" class="cards-count">0 / 22 revealed</p>
+        <div style="display: flex; gap: 20px; justify-content: center; align-items: center; margin-bottom: 20px;">
+          <p id="cards-count" class="cards-count" style="margin: 0;">0 / 22 revealed</p>
+          <button id="btn-flip-all" class="btn-secondary" style="padding: 5px 15px; font-size: 0.9rem;">Flip All</button>
+        </div>
       </div>
       <div class="cards-grid" id="cards-grid">
         <!-- Cards injected by JS from REASONS array in main.js -->
       </div>
       <div id="cards-complete" class="cards-complete hidden">
         <p>You found all 22 reasons! 🎉</p>
-        <button id="btn-finale" class="btn-next">The Grand Finale →</button>
+        <button id="btn-to-video" class="btn-next">Watch the Video →</button>
+      </div>
+    </section>
+
+    <!-- ===== SCENE 4.5 — VIDEO ===== -->
+    <section id="scene-video" class="scene" aria-label="Special Video">
+      <div class="video-container" style="text-align: center; max-width: 800px; width: 90%; z-index: 2;">
+        <h1 class="video-title" style="font-family: var(--f-heading); color: var(--c-primary); font-size: 2.5rem; margin-bottom: 2rem;">Wait, there's one more thing... 🎥</h1>
+        <video id="special-video" controls width="100%" style="border-radius: var(--br); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+          <source src="Video/WhatsApp Video 2026-05-03 at 2.08.26 AM.mp4" type="video/mp4">
+          Your browser does not support HTML video.
+        </video>
+        <div style="margin-top: 3rem;">
+          <button id="btn-video-next" class="btn-next">To the Grand Finale →</button>
+        </div>
       </div>
     </section>
 
@@ -599,7 +613,10 @@
           <!-- EDIT: Set your anniversary date in main.js → ANNIVERSARY_DATE -->
         </div>
 
-        <button id="btn-wish" class="btn-wish">🌠 Make a Wish</button>
+        <div id="wish-container" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+          <input type="text" id="wish-input" class="wish-input" placeholder="Type your wish here..." autocomplete="off">
+          <button id="btn-wish" class="btn-wish">🌠 Send to the Stars</button>
+        </div>
         <p class="finale-footer">Made with love, just for you 💌</p>
       </div>
     </section>
