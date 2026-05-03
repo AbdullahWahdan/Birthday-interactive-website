@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     "How you make me want to be better", "The way you hold my hand", "Your passion",
     "How we share everything", "You understand me perfectly", "Your gorgeous eyes",
     "The way you say my name", "How safe I feel with you", "Your gentle touch",
-    "Every memory we've made", "How you light up a room", "Your warm hugs",
+    "Every memory we've made", "How you light up a room", "Your special way of treating me",
     "Because you are simply YOU"
   ];
   const LOVE_LETTER = "My dearest Habiba,<br><br>Happy 22nd Birthday! Every day with you is a gift, and I wanted to make this one extra special. You mean the world to me, and I can't wait to make more beautiful memories together.<br><br>I love you endlessly.";
@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       attempts++;
       pwInput.value = '';
-      
+
       if (attempts === 1) {
         trialMsg.textContent = funnyErrors[0];
         trialMsg.classList.remove('hidden');
@@ -344,8 +344,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const wishInput = document.getElementById('wish-input');
     const wishVal = wishInput.value.trim();
     if (!wishVal) {
-        wishInput.focus();
-        return;
+      wishInput.focus();
+      return;
     }
 
     const flyingText = document.createElement('div');
