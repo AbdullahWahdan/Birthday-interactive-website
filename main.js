@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   // --- CONFIGURATION ---
-  const PASSWORD = "4626";
+  const PASSWORD = "13626";
   const ANNIVERSARY_DATE = "2004-07-28"; // Birthday: 28/07/2004
   const REASONS = [
     "Your beautiful smile", "How you laugh at my jokes", "Your kind heart",
