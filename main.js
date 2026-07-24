@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   // --- CONFIGURATION ---
-  const PASSWORD = "28126";
-  const ANNIVERSARY_DATE = "2026-01-28"; // Format: YYYY-MM-DD - YOU CAN CHANGE THIS
+  const PASSWORD = "4626";
+  const ANNIVERSARY_DATE = "2004-07-28"; // Birthday: 28/07/2004
   const REASONS = [
     "Your beautiful smile", "How you laugh at my jokes", "Your kind heart",
     "The way you look at me", "How we can talk for hours", "Your sense of humor",
@@ -13,20 +13,32 @@ document.addEventListener('DOMContentLoaded', () => {
     "Every memory we've made", "How you light up a room", "Your special way of treating me",
     "Because you are simply YOU"
   ];
-  const LOVE_LETTER = "My dearest Habiba,<br><br>Happy 22nd Birthday! Every day with you is a gift, and I wanted to make this one extra special. You mean the world to me, and I can't wait to make more beautiful memories together.<br><br>I love you endlessly.";
+  const LOVE_LETTER = "My dearest Nory,<br><br>Happy 22nd Birthday! Every day with you is a gift, and I wanted to make this one extra special. You mean the world to me, and I can't wait to make more beautiful memories together.<br><br>I love you endlessly.";
 
   const ALL_PHOTOS = [
-    "1.jpg", "10.jpg", "11.jpg", "12.jpg", "13.jpg", "14.jpg", "15.jpg", "16.jpg", "17.jpg", "18.jpg", "19.jpg",
-    "2.jpg", "20.jpg", "21.jpg", "22.jpg", "23.jpg", "24.jpg", "25.jpg", "26.jpg", "27.jpg", "28.jpg", "29.jpg",
-    "3.jpg", "30.jpg", "31.jpg", "32.jpg", "33.jpg", "34.jpg", "35.jpg", "36.jpg", "37.jpg", "38.jpg", "39.jpg",
-    "4.jpg", "40.jpg", "41.jpg", "42.jpg", "43.jpg", "44.jpg", "45.jpg", "46.jpg", "47.jpg", "48.jpg", "49.jpg",
-    "6.jpg", "8.jpg", "9.jpg", "50.jpg", "51.jpg", "52.jpg", "53.jpg", "54.jpg", "55.jpg", "56.jpg", "57.jpg", "58.jpg", "59.jpg",
-    "WhatsApp Image 2026-05-03 at 1.38.28 AM (1).jpeg",
-    "WhatsApp Image 2026-05-03 at 1.38.28 AM.jpeg",
-    "WhatsApp Image 2026-05-03 at 1.38.29 AM (1).jpeg",
-    "WhatsApp Image 2026-05-03 at 1.38.29 AM.jpeg",
-    "WhatsApp Image 2026-05-03 at 1.38.30 AM (1).jpeg",
-    "WhatsApp Image 2026-05-03 at 1.38.30 AM.jpeg"
+    "WhatsApp Image 2026-07-24 at 3.01.25 AM (1).jpeg",
+    "WhatsApp Image 2026-07-24 at 3.01.25 AM (2).jpeg",
+    "WhatsApp Image 2026-07-24 at 3.01.25 AM (3).jpeg",
+    "WhatsApp Image 2026-07-24 at 3.01.25 AM (4).jpeg",
+    "WhatsApp Image 2026-07-24 at 3.01.25 AM.jpeg",
+    "WhatsApp Image 2026-07-24 at 3.01.26 AM (1).jpeg",
+    "WhatsApp Image 2026-07-24 at 3.01.26 AM.jpeg",
+    "WhatsApp Image 2026-07-24 at 3.01.27 AM (1).jpeg",
+    "WhatsApp Image 2026-07-24 at 3.01.27 AM.jpeg",
+    "WhatsApp Image 2026-07-24 at 3.04.58 AM.jpeg",
+    "WhatsApp Image 2026-07-24 at 3.04.59 AM.jpeg",
+    "WhatsApp Image 2026-07-24 at 3.05.00 AM.jpeg",
+    "WhatsApp Image 2026-07-24 at 3.08.48 AM (1).jpeg",
+    "WhatsApp Image 2026-07-24 at 3.08.48 AM.jpeg",
+    "WhatsApp Image 2026-07-24 at 3.11.56 AM.jpeg",
+    "WhatsApp Image 2026-07-24 at 3.31.51 AM (1).jpeg",
+    "WhatsApp Image 2026-07-24 at 3.31.51 AM.jpeg",
+    "WhatsApp Image 2026-07-24 at 3.31.52 AM (1).jpeg",
+    "WhatsApp Image 2026-07-24 at 3.31.52 AM.jpeg",
+    "WhatsApp Image 2026-07-24 at 3.31.53 AM (1).jpeg",
+    "WhatsApp Image 2026-07-24 at 3.31.53 AM (2).jpeg",
+    "WhatsApp Image 2026-07-24 at 3.31.53 AM.jpeg",
+    "WhatsApp Image 2026-07-24 at 3.31.57 AM.jpeg"
   ];
 
   function shufflePhotos() {
@@ -37,17 +49,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const imgs = document.querySelectorAll('.polaroid img');
-    let photoIndex = 0;
     imgs.forEach((img, idx) => {
-      if (idx === 0) {
-        img.src = 'photos/7.jpg';
-      } else if (idx === 1) {
-        img.src = 'photos/5.jpg';
+      if (idx === imgs.length - 1) {
+        img.src = 'photos/last.jpeg';
       } else {
-        if (photoIndex < shuffled.length) {
-          img.src = 'photos/' + shuffled[photoIndex];
-          photoIndex++;
-        }
+        img.src = 'photos/' + shuffled[idx % shuffled.length];
       }
     });
   }
@@ -134,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let attempts = 0;
 
   const funnyErrors = [
-    "You are not actually Habiba, right? 🤨",
+    "You are not actually Nory, right? 🤨",
     "Try harder to remember! 🙄",
   ];
 
@@ -293,24 +299,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  document.getElementById('btn-to-video').addEventListener('click', () => switchScene('scene-video'));
-
-  document.getElementById('btn-video-next').addEventListener('click', () => {
-    document.getElementById('special-video').pause();
-    switchScene('scene-finale');
-  });
-
-  const specialVideo = document.getElementById('special-video');
-  if (specialVideo) {
-    specialVideo.addEventListener('play', () => {
-      if (isMusicPlaying) bgMusic.pause();
-    });
-    specialVideo.addEventListener('pause', () => {
-      if (isMusicPlaying) bgMusic.play();
-    });
-    specialVideo.addEventListener('ended', () => {
-      if (isMusicPlaying) bgMusic.play();
-    });
+  const btnToFinale = document.getElementById('btn-to-finale') || document.getElementById('btn-to-video');
+  if (btnToFinale) {
+    btnToFinale.addEventListener('click', () => switchScene('scene-finale'));
   }
 
   document.getElementById('btn-flip-all').addEventListener('click', () => {
@@ -330,14 +321,14 @@ document.addEventListener('DOMContentLoaded', () => {
   function initFinale() {
     document.getElementById('letter-text').innerHTML = LOVE_LETTER;
 
-    // Calculate days
-    const start = new Date(ANNIVERSARY_DATE);
-    const now = new Date();
-    const diffTime = Math.abs(now - start);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    document.getElementById('days-num').textContent = diffDays;
-
-    // Fireworks start after making wish
+    const daysEl = document.getElementById('days-num');
+    if (daysEl) {
+      const start = new Date(ANNIVERSARY_DATE);
+      const now = new Date();
+      const diffTime = Math.abs(now - start);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      daysEl.textContent = diffDays;
+    }
   }
 
   document.getElementById('btn-wish').addEventListener('click', () => {
